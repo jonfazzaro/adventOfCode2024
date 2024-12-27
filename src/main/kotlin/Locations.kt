@@ -7,5 +7,11 @@ class Locations(val list: List<Int>) {
             .sum()
     }
 
+    fun similarity(other: Locations): Int {
+        return list.sumOf {
+            it * other.list.count { o -> o == it }
+        }
+    }
+
 
 }

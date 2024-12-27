@@ -27,11 +27,19 @@ class TheLocations {
     }
     
     @Test
-    fun `reconciles the two lists of numbers in the full puzzle`() {
+    fun `reconciles and scores the similarity of the two lists of numbers in the full puzzle`() {
         val puzzleParser = InputParser(input)
         val locationsA = Locations(puzzleParser.lists[0])
         val locationsB = Locations(puzzleParser.lists[1])
         assertThat(locationsB.reconcile(locationsA)).isEqualTo(2086478)
+        assertThat(locationsB.similarity(locationsA)).isEqualTo(24941624)
+    }
+    
+    @Test
+    fun `finds the similarity of the two lists`() {
+        val locationsA = Locations(parser.lists[0])
+        val locationsB = Locations(parser.lists[1])
+        assertThat(locationsA.similarity(locationsB)).isEqualTo(31)
     }
     
 }
