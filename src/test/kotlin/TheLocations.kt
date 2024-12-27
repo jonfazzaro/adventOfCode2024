@@ -18,4 +18,11 @@ class TheLocations {
         assertThat(Locations(parser.lists[0]).list).containsExactly(3, 4, 2, 1, 3, 3)
         assertThat(Locations(parser.lists[1]).list).containsExactly(4, 3, 5, 3, 9, 3)
     }
+    
+    @Test
+    fun `reconciles the two lists of numbers`() {
+        val locationsA = Locations(parser.lists[0])
+        val locationsB = Locations(parser.lists[1])
+        assertThat(locationsA.reconcile(locationsB)).isEqualTo(11)
+    }
 }
