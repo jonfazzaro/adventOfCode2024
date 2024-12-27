@@ -12,6 +12,4 @@ class Locations(val list: List<Int>) {
             it * other.list.count { o -> o == it }
         }
     }
-
-
 }

@@ -1,50 +1,32 @@
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class TheLocations {
-    private val parser = InputParser(
-        """
-            3   4
-            4   3
-            2   5
-            1   3
-            3   9
-            3   3
-        """.trimIndent()
-    )
+    private val locationsA = Locations(listOf(3, 4, 2, 1, 3, 3))
+    private val locationsB = Locations(listOf(4, 3, 5, 3, 9, 3))
 
     @Test
-    fun `parses the two lists of numbers`() {
-        assertThat(Locations(parser.lists[0]).list).containsExactly(3, 4, 2, 1, 3, 3)
-        assertThat(Locations(parser.lists[1]).list).containsExactly(4, 3, 5, 3, 9, 3)
-    }
-    
-    @Test
     fun `reconciles the two lists of numbers`() {
-        val locationsA = Locations(parser.lists[0])
-        val locationsB = Locations(parser.lists[1])
         assertThat(locationsA.reconcile(locationsB)).isEqualTo(11)
     }
-    
+
     @Test
-    fun `reconciles and scores the similarity of the two lists of numbers in the full puzzle`() {
+    fun `finds the similarity of the two lists`() {
+        assertThat(locationsA.similarity(locationsB)).isEqualTo(31)
+    }
+
+    @Test
+    fun `solves the full puzzle`() {
         val puzzleParser = InputParser(input)
         val locationsA = Locations(puzzleParser.lists[0])
         val locationsB = Locations(puzzleParser.lists[1])
         assertThat(locationsB.reconcile(locationsA)).isEqualTo(2086478)
         assertThat(locationsB.similarity(locationsA)).isEqualTo(24941624)
     }
-    
-    @Test
-    fun `finds the similarity of the two lists`() {
-        val locationsA = Locations(parser.lists[0])
-        val locationsB = Locations(parser.lists[1])
-        assertThat(locationsA.similarity(locationsB)).isEqualTo(31)
-    }
-    
+
 }
 
-val input = """
+private val input = """
     57643   17620
     19062   47340
     11105   16109
