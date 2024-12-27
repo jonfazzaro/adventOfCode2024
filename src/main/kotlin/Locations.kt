@@ -1,3 +1,4 @@
-class Locations {
+class Locations(val list: List<Int>) {
+
 
 }
