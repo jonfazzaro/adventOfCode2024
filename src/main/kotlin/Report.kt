@@ -8,7 +8,8 @@ class Report(input: String) {
     }.toList()
 
     fun isSafe(): Boolean {
-        return (levels.zipWithNext().all { it.isIncreasing() } || levels.zipWithNext().all { it.isDecreasing()}) 
+        return (levels.zipWithNext().all { it.isIncreasing() } 
+            || levels.zipWithNext().all { it.isDecreasing()}) 
             && levels.zipWithNext().all { it.isWithin(3) }
     }
 }
