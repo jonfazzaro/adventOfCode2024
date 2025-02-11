@@ -18,7 +18,7 @@ class TheReport {
         "all increasing by 1 2 or 3, 1 3 6 7 9, true",
     )
     fun `reports safety based on level differences`(caption: String, levels: String, expectedSafe: Boolean) {
-        assertThat(Report(levels).isSafe()).isEqualTo(expectedSafe)
+        assertThat(Reactor(Report(levels)).isSafe()).isEqualTo(expectedSafe)
     }
 
     @Nested
@@ -34,14 +34,15 @@ class TheReport {
             "all increasing by 1 2 or 3, 1 3 6 7 9, true",
         )
         fun `reports safety based on level differences`(caption: String, levels: String, expectedSafe: Boolean) {
-            assertThat(DampeningReport(levels).isSafe()).isEqualTo(expectedSafe)
+            assertThat(ProblemDampenedReactor(Report(levels)).isSafe()).isEqualTo(expectedSafe)
         } 
         
     }
     
     @Test
     fun `solves the puzzle`() { 
-        assertThat(ReportParser(input).reports.count { it.isSafe() }).isEqualTo(407)
+        assertThat(ReportParser(input).reports.count { Reactor(it).isSafe() }).isEqualTo(407)
+        assertThat(ReportParser(input).reports.count { ProblemDampenedReactor(it).isSafe() }).isEqualTo(567)
     }
 }
 
