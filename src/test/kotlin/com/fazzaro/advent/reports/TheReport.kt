@@ -1,4 +1,7 @@
+package com.fazzaro.advent.reports
+
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -16,6 +19,24 @@ class TheReport {
     )
     fun `reports safety based on level differences`(caption: String, levels: String, expectedSafe: Boolean) {
         assertThat(Report(levels).isSafe()).isEqualTo(expectedSafe)
+    }
+
+    @Nested
+    inner class `when dampening` {
+
+        @ParameterizedTest(name = "{0}")
+        @CsvSource(
+            "levels decrease by 1 or 2, 7 6 4 2 1, true",
+            "levels increase by 5, 1 2 7 8 9, false",
+            "levels decrease by 4, 9 7 6 2 1, false",
+            "levels increase and decrease except one, 1 3 2 4 5, true",
+            "neither an increase or a decrease except one, 8 6 4 4 1, true",
+            "all increasing by 1 2 or 3, 1 3 6 7 9, true",
+        )
+        fun `reports safety based on level differences`(caption: String, levels: String, expectedSafe: Boolean) {
+            assertThat(DampeningReport(levels).isSafe()).isEqualTo(expectedSafe)
+        } 
+        
     }
     
     @Test

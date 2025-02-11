@@ -1,3 +1,5 @@
+package com.fazzaro.advent.reports
+
 class ReportParser(input: String) {
 
     val reports: List<Report> = parse(input)

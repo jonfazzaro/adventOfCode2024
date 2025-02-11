@@ -1,3 +1,5 @@
+package com.fazzaro.advent
+
 class InputParser(input: String) {
 
     val lists: List<List<Int>> = listOf(

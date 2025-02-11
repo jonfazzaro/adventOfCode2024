@@ -1,3 +1,5 @@
+package com.fazzaro.advent
+
 import kotlin.math.abs
 
 class Locations(val list: List<Int>) {

@@ -1,6 +1,8 @@
+package com.fazzaro.advent.reports
+
 import kotlin.math.abs
 
-class Report(input: String) {
+open class Report(input: String) {
     val levels: List<Int> = parse(input)
 
     private fun parse(input: String) = input.split(" ").map {
@@ -8,9 +10,12 @@ class Report(input: String) {
     }.toList()
 
     fun isSafe(): Boolean {
-        return (levels.zipWithNext().all { it.isIncreasing() } 
-            || levels.zipWithNext().all { it.isDecreasing()}) 
-            && levels.zipWithNext().all { it.isWithin(3) }
+        return (test { it.isIncreasing() } || test { it.isDecreasing() })
+            && test { it.isWithin(3) }
+    }
+    
+    protected open fun test(condition: (pair:Pair<Int, Int>) -> Boolean): Boolean {
+        return levels.zipWithNext().all { condition(it) }
     }
 }
 
