@@ -11,22 +11,23 @@ class Report(input: String) {
 }
 
 open class Reactor(protected val report: Report) {
-    fun isSafe(): Boolean {
-        return (test { it.isIncreasing() } || test { it.isDecreasing() })
-                && test { it.isWithin(3) }
+    open fun isSafe(): Boolean {
+        return isSafe(report.levels)
     }
 
-    protected open fun test(condition: (pair:Pair<Int, Int>) -> Boolean): Boolean {
-        return report.levels.zipWithNext().all { condition(it) }
-    } 
+    protected fun isSafe(levelsToTest: List<Int>) =
+        ((levelsToTest.zipWithNext().all { it.isIncreasing() } || levelsToTest.zipWithNext().all { it.isDecreasing() })
+                && levelsToTest.zipWithNext().all { it.isWithin(3) })
 }
 
 class ProblemDampenedReactor(report: Report) : Reactor(report) {
-    override fun test(condition: (pair: Pair<Int, Int>) -> Boolean): Boolean {
-        return report.levels.any { level ->
-            report.levels.filter{ it != level }.zipWithNext().all { condition(it) }
+    override fun isSafe(): Boolean {
+        return withRemoved(report.levels).any {
+            return@any isSafe(it)
         }
     }
+
+    private fun withRemoved(levels: List<Int>) = List(levels.size) { index -> levels.filterIndexed { i, _ -> index != i } }
 }
 
 fun Pair<Int, Int>.isWithin(span: Int) = abs(this.first - this.second) <= span
