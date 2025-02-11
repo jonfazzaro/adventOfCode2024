@@ -42,7 +42,7 @@ class TheReport {
     @Test
     fun `solves the puzzle`() { 
         assertThat(ReportParser(input).reports.count { Reactor(it).isSafe() }).isEqualTo(407)
-        assertThat(ReportParser(input).reports.count { ProblemDampenedReactor(it).isSafe() }).isEqualTo(222)
+        assertThat(ReportParser(input).reports.count { ProblemDampenedReactor(it).isSafe() }).isEqualTo(459)
     }
 }
 
